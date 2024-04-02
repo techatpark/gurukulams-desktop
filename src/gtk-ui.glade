@@ -68,7 +68,7 @@ Author: Nil Gradisnik
 								<child>
 									<object class="GtkStack" id="left_stack">
 										<child>
-											<object class="GtkButton" id="navigator_view">
+											<object class="GtkToolButton" id="navigator_view">
 												<property name="label" translatable="yes">Nav</property>
 												<property name="width_request">100</property>
 												<property name="height_request">80</property>
@@ -83,20 +83,166 @@ Author: Nil Gradisnik
 											</packing>
 										</child>
 										<child>
-											<object class="GtkButton" id="markdown_editor_view">
-												<property name="label" translatable="yes">MD</property>
-												<property name="width_request">100</property>
-												<property name="height_request">80</property>
-												<property name="visible">True</property>
-												<property name="can_focus">True</property>
-												<property name="receives_default">True</property>
-												<signal name="clicked" handler="on_clicked" swapped="no"/>
-											</object>
-											<packing>
-												<property name="x">182</property>
-												<property name="y">146</property>
-											</packing>
-										</child>
+                    <object class="GtkBox" id="markdown_editor_view">
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="GtkBox">
+							<property name="orientation">vertical</property>
+                                <child type="start">
+                                    <object class="GtkBox">
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_open_menu">
+                                                <property name="label">Open</property>
+                                                
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_save">
+                                                <property name="icon-name">document-save-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Save</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child type="center">
+                                    <object class="GtkBox">
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_undo">
+                                                <property name="icon-name">edit-undo-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Undo (Ctrl+Z)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_redo">
+                                                <property name="icon-name">edit-redo-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Redo (Ctrl+Y)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_clear">
+                                                <property name="icon-name">edit-clear-all-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Clear Format (Ctrl+N)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton">
+                                                <property name="icon-name">applications-graphics-symbolic</property>
+                                                <property name="can-focus">false</property>
+                                              
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_bold">
+                                                <property name="icon-name">format-text-bold-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">BOLD (Ctrl+B)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_italic">
+                                                <property name="icon-name">format-text-italic-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Italic (Ctrl+I)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_code">
+                                                <property name="icon-name">text-html-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Code (Ctrl+T)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_strike">
+                                                <property name="icon-name">format-text-strikethrough-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Strike Through (Ctrl+D)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_link">
+                                                <property name="icon-name">insert-link-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Link or image reference (Ctrl+L)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkSeparator">
+                                                <property name="orientation">vertical</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child type="end">
+                                    <object class="GtkBox">
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_search">
+                                                <property name="icon-name">system-search-symbolic</property>
+                                                <property name="tooltip-text" translatable="yes">Search (Ctrl+F)</property>
+                                                <property name="can-focus">false</property>
+                                               
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkToolButton" id="btn_menu">
+                                                <property name="icon-name">preferences-desktop-symbolic</property>
+                                                <property name="can-focus">false</property>
+                                               
+                          
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox" id="text_view_container">
+                                <property name="orientation">vertical</property>
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
 									</object>
 								</child>
 							</object>
