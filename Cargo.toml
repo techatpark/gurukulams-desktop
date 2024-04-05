@@ -4,8 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-markdown = "1.0.0-alpha.16"
+gtk = { version = "0.8.1", package = "gtk4", features = ["v4_6"] }
+sourceview5 = "0.8.0"
 
-[dependencies.gtk]
-version = "0.18.1"
-features = ["v3_24"]

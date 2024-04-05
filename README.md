@@ -22,3 +22,6 @@ Build and run
 ## Packaging status
 
 Fedora/CentOS [COPR](https://copr.fedorainfracloud.org/coprs/atim/markdown-rs/): `sudo dnf copr enable atim/markdown-rs -y && sudo dnf install markdown-rs`
+
+
+Reg: https://gitlab.gnome.org/World/Rust/sourceview5-rs/-/blob/main/demo/src/main.rs?ref_type=heads
