@@ -1,8 +1,17 @@
-use gtk::{gio, glib, prelude::*, Builder};
+use gtk::{gio, glib, prelude::*, ApplicationWindow, Builder};
 use sourceview5::prelude::*;
 
 fn build_ui(application: &gtk::Application) {
-    let window = gtk::ApplicationWindow::new(application);
+
+    let glade_src = include_str!("window.glade");
+    let builder = Builder::new();
+    builder
+        .add_from_string(glade_src)
+        .expect("Builder couldn't add from string");
+
+    let window:ApplicationWindow = builder.object("window").expect("Couldn't get window");
+
+    window.set_application(Some(application));
 
     window.set_title(Some("Gurukulams"));
     window.set_default_size(500, 500);
