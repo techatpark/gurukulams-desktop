@@ -2,14 +2,13 @@ use gtk::{gio, glib, prelude::*, ApplicationWindow, Builder};
 use sourceview5::prelude::*;
 
 fn build_ui(application: &gtk::Application) {
-
     let glade_src = include_str!("window.glade");
     let builder = Builder::new();
     builder
         .add_from_string(glade_src)
         .expect("Builder couldn't add from string");
 
-    let window:ApplicationWindow = builder.object("window").expect("Couldn't get window");
+    let window: ApplicationWindow = builder.object("window").expect("Couldn't get window");
 
     window.set_application(Some(application));
     window.set_title(Some("Gurukulams"));
@@ -17,13 +16,19 @@ fn build_ui(application: &gtk::Application) {
 
     let open_button: gtk::Button = builder.object("open_button").unwrap();
     let file_open: gtk::FileChooserDialog = builder.object("file_open").unwrap();
-    file_open.add_buttons(&[("Open", gtk::ResponseType::Ok.into()), ("Cancel", gtk::ResponseType::Cancel.into())]);
-    
+    file_open.add_buttons(&[
+        ("Open", gtk::ResponseType::Ok.into()),
+        ("Cancel", gtk::ResponseType::Cancel.into()),
+    ]);
+
     // Connect to "clicked" signal of `button`
     open_button.connect_clicked(move |_| {
         file_open.show();
+        file_open.connect_response(move |d, response| {
+            println!("Connected");
+            d.destroy();
+        });
     });
-
 
     let buffer = sourceview5::Buffer::new(None);
     buffer.set_highlight_syntax(true);
@@ -53,14 +58,13 @@ fn build_ui(application: &gtk::Application) {
 
     let editor_container = gtk::Box::new(gtk::Orientation::Vertical, 0);
 
-
     let glade_src = include_str!("md_toolbar.glade");
     let builder = Builder::new();
     builder
         .add_from_string(glade_src)
         .expect("Builder couldn't add from string");
 
-    let md_toolbar:gtk::Box = builder.object("md_toolbar").expect("Couldn't get window");
+    let md_toolbar: gtk::Box = builder.object("md_toolbar").expect("Couldn't get window");
 
     editor_container.append(&md_toolbar);
 
@@ -73,11 +77,9 @@ fn build_ui(application: &gtk::Application) {
     view.set_hexpand(true);
     editor_container.append(&view);
 
-
     // let map = sourceview5::Map::new();
     // map.set_view(&view);
     // container.append(&map);
-
 
     window.set_child(Some(&editor_container));
     window.show();
