@@ -12,9 +12,18 @@ fn build_ui(application: &gtk::Application) {
     let window:ApplicationWindow = builder.object("window").expect("Couldn't get window");
 
     window.set_application(Some(application));
-
     window.set_title(Some("Gurukulams"));
     window.set_default_size(500, 500);
+
+    let open_button: gtk::Button = builder.object("open_button").unwrap();
+    let file_open: gtk::FileChooserDialog = builder.object("file_open").unwrap();
+    file_open.add_buttons(&[("Open", gtk::ResponseType::Ok.into()), ("Cancel", gtk::ResponseType::Cancel.into())]);
+    
+    // Connect to "clicked" signal of `button`
+    open_button.connect_clicked(move |_| {
+        file_open.show();
+    });
+
 
     let buffer = sourceview5::Buffer::new(None);
     buffer.set_highlight_syntax(true);
@@ -68,11 +77,6 @@ fn build_ui(application: &gtk::Application) {
     // let map = sourceview5::Map::new();
     // map.set_view(&view);
     // container.append(&map);
-
-
-
-   
-
 
 
     window.set_child(Some(&editor_container));
