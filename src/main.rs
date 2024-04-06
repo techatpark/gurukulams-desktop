@@ -25,7 +25,12 @@ fn build_ui(application: &gtk::Application) {
     open_button.connect_clicked(move |_| {
         file_open.show();
         file_open.connect_response(move |d, response| {
-            println!("Connected");
+            if response == gtk::ResponseType::Ok {
+                let selected_file = d.file().expect("Couldn't get filename");
+    
+                println!("loaded: {:?}", selected_file);
+            }
+            
             d.destroy();
         });
     });
