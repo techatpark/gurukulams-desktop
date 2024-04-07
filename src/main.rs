@@ -1,4 +1,9 @@
 use gtk::{gio, glib, prelude::*, ApplicationWindow, Builder};
+
+use std::fs::File;
+use std::io::{BufReader, Read as _};
+use std::path::PathBuf;
+
 use sourceview5::prelude::*;
 
 fn build_ui(application: &gtk::Application) {
@@ -14,6 +19,17 @@ fn build_ui(application: &gtk::Application) {
     window.set_title(Some("Gurukulams"));
     window.set_default_size(500, 500);
 
+    
+
+    let buffer = sourceview5::Buffer::new(None);
+    buffer.set_highlight_syntax(true);
+    if let Some(ref language) = sourceview5::LanguageManager::new().language("markdown") {
+        buffer.set_language(Some(language));
+    }
+    if let Some(ref scheme) = sourceview5::StyleSchemeManager::new().scheme("solarized-light") {
+        buffer.set_style_scheme(Some(scheme));
+    }
+
     let open_button: gtk::Button = builder.object("open_button").unwrap();
     let file_open: gtk::FileChooserDialog = builder.object("file_open").unwrap();
     file_open.add_buttons(&[
@@ -28,21 +44,12 @@ fn build_ui(application: &gtk::Application) {
             if response == gtk::ResponseType::Ok {
                 let selected_file = d.file().expect("Couldn't get filename");
     
-                println!("loaded: {:?}", selected_file);
+                println!("loaded: {:?}", &open_file(selected_file.path()));
             }
             
             d.destroy();
         });
     });
-
-    let buffer = sourceview5::Buffer::new(None);
-    buffer.set_highlight_syntax(true);
-    if let Some(ref language) = sourceview5::LanguageManager::new().language("markdown") {
-        buffer.set_language(Some(language));
-    }
-    if let Some(ref scheme) = sourceview5::StyleSchemeManager::new().scheme("solarized-light") {
-        buffer.set_style_scheme(Some(scheme));
-    }
 
     let file = gio::File::for_path("./README.md");
     let file = sourceview5::File::builder().location(&file).build();
@@ -88,6 +95,20 @@ fn build_ui(application: &gtk::Application) {
 
     window.set_child(Some(&editor_container));
     window.show();
+}
+
+fn open_file(filename: Option<PathBuf>) -> String {
+    match filename {
+        Some(p) => {
+            let file = File::open(p).expect("Couldn't open file");
+            let mut reader = BufReader::new(file);
+            let mut contents = String::new();
+            let _ = reader.read_to_string(&mut contents);
+
+            contents
+        },
+        None => "".to_owned()
+    }
 }
 
 fn main() {
